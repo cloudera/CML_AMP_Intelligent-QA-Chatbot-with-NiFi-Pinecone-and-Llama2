@@ -1,0 +1,6 @@
+fastapi==0.101.1
+typing-extensions==4.5.0
+llama-cpp-python==0.1.78
+uvicorn[standard]==0.23.2
+tensorflow==2.13.0
+click==8.1.7

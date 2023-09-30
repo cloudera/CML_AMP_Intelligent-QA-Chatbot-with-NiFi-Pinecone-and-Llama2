@@ -1,0 +1,22 @@
+name: Llama2 API Internally Hosted LLM
+
+entries:
+  - title: Llama2 API Internally Hosted LLM
+    label: llm-code-creation
+    short_description: |
+        Host your own Llama2 API for building and training an internal LLM.
+    long_description: |
+        This AMP builds a Llama2 API for hosting internal data. 
+        Users can interface with this API to build and train their
+        own content/knowledge base.
+
+    image_path: >-
+      https://raw.githubusercontent.com/kevinbtalbert/llama2-api-open-source/main/assets/catalog-entry.png
+    tags:
+      - Llama2
+      - LLM
+      - NLP
+      - Generative AI
+      - API
+    git_url: 'https://github.com/kevinbtalbert/llama2-api-open-source'
+    is_prototype: true
