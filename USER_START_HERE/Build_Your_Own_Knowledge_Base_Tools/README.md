@@ -11,25 +11,25 @@ This can be completed using the Cloudera DataFlow data service, or using a flavo
 
 2. Setup in a manner similar to below screenshots:
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step1.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/setup-step1.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step2.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/setup-step2.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step3.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/setup-step3.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step4.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/setup-step4.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step5.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/setup-step5.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step1.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step1.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step2.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step2.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step3.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step3.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step4.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step4.png)
 
-![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step5.png)
+![](/assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step5.png)
 
 3. Lastly, once your processors are up and running, and accepting HTTP POST Requests, you can use Postman (or `SamplePOSTRequestToNiFi.ipynb` within a session) to send your first sitemap to the flow.
 
