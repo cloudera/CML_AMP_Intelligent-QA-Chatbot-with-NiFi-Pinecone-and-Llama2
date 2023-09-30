@@ -31,7 +31,7 @@ This can be completed using the Cloudera DataFlow data service, or using a flavo
 
 ![](/assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step5.png)
 
-3. Lastly, once your processors are up and running, and accepting HTTP POST Requests, you can use Postman (or `SamplePOSTRequestToNiFi.ipynb` within a session) to send your first sitemap to the flow.
+3. Lastly, once your processors are up and running, and accepting HTTP POST Requests, you can use Postman (or `SamplePOSTRequestToNiFi.ipynb` within a session) to send your first sitemap to the flow. You can use the endpoint hostname and listening port on the last page of your deployment to form your POST request.
 
 Note, this implementation stores the downloaded files into a /tmp directory in hdfs. You will need to ensure you run the appropriate `hdfs fs -get <source> <destination>` or `hdfs fs -copyToLocal <source> <destination>` (or an S3 command equivalent) to get these into your `/data` directory in CML. Refer to https://docs.cloudera.com/machine-learning/cloud/import-data/topics/ml-accessing-data-from-hdfs.html for additional code and information.
 
