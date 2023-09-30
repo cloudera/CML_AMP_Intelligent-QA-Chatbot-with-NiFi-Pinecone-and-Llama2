@@ -9,8 +9,31 @@ This can be completed using the Cloudera DataFlow data service, or using a flavo
 
 1. Download the Json file from `/USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/NiFi-based_sitemap_scrape/pubsecml-version-1.json` and import it into your catalog.
 
+2. Setup in a manner similar to below screenshots:
 
-Note, this implementation stores the downloaded files into a /tmp directory in hdfs. You will need to ensure you run the appropriate `hdfs fs -get <source> <destination>` or `hdfs fs -copyToLocal <source> <destination>` (or an S3 command equivalent) to get these into your `/data` directory in CML. 
+![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step1.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step2.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step3.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step4.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/setup-step5.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step1.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step2.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step3.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step4.png)
+
+![](assets/build_your_own_kb_screenshots/nifi_implementation/deploy-step5.png)
+
+3. Lastly, once your processors are up and running, and accepting HTTP POST Requests, you can use Postman (or `SamplePOSTRequestToNiFi.ipynb` within a session) to send your first sitemap to the flow.
+
+Note, this implementation stores the downloaded files into a /tmp directory in hdfs. You will need to ensure you run the appropriate `hdfs fs -get <source> <destination>` or `hdfs fs -copyToLocal <source> <destination>` (or an S3 command equivalent) to get these into your `/data` directory in CML. Refer to https://docs.cloudera.com/machine-learning/cloud/import-data/topics/ml-accessing-data-from-hdfs.html for additional code and information.
 
 
 
