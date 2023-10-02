@@ -8,20 +8,25 @@ import cmlapi
 import cdsw
 from datetime import datetime
 
+## Learn more: https://docs.cloudera.com/machine-learning/cloud/models/topics/ml-creating-and-deploying-a-model.html
+
 # lets us get a Handle to API 
 client = cmlapi.default_client()
-# project_id = os.environ["CDSW_PROJECT_ID"]
-projects = client.list_projects(search_filter=json.dumps({"name": "CML-LLM-HOL-Workshop"}))
-project = projects.projects[0] # assuming only one project is returned by the above query
+project_id = os.environ["CDSW_PROJECT_ID"]
+project = client.get_project(project_id = project_id)
+
+# projects = client.list_projects(search_filter=json.dumps({"name": "CML-LLM-Test"}))
+# print(projects)
+# project = projects.projects[0] # assuming only one project is returned by the above query
 
 
 # create a model request
-model_body = cmlapi.CreateModelRequest(project_id=project.id, name="Text Summarization LLM v2.0", description="Text Summarization using T5-small LLM Model")
+model_body = cmlapi.CreateModelRequest(project_id=project.id, name="llama2-model8", description="Internally Hosted Llama2 Model")
 model = client.create_model(model_body, project.id)
 
 # create a model request
-runtime_details='docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-workbench-python3.9-standard:2023.05.2-b7'
-model_build_body = cmlapi.CreateModelBuildRequest(project_id=project.id, model_id=model.id, file_path="./004_deploy-and-test-models/LLM_inference.py", function_name="summarize", kernel="python3", runtime_identifier=runtime_details)
+runtime_details='docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-jupyterlab-python3.9-cuda:2023.08.2-b8'
+model_build_body = cmlapi.CreateModelBuildRequest(project_id=project.id, model_id=model.id, file_path="./deploy_model/build_model.py", function_name="get_llama2_response", kernel="python3", runtime_identifier=runtime_details)
 
 start_time = datetime.now()
 print(start_time.strftime("%H:%M:%S"))

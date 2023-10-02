@@ -1,6 +1,5 @@
 import os
 import gradio
-import openai
 from milvus import default_server
 from pymilvus import connections, Collection
 from typing import Any, Union, Optional
@@ -83,8 +82,16 @@ def main():
 
 # Helper function for generating responses for the QA app
 def get_responses(engine, temperature, token_count, topic_weight, question):
-    if engine is "" or question is "" or temperature is "" or token_count is "" or engine is None or question is None or temperature is None or token_count is None:
+    if engine is "" or question is "" or engine is None or question is None:
         return "One or more fields have not been specified."
+    if temperature is "" or temperature is None:
+      temperature = 1
+      
+    if topic_weight is "" or topic_weight is None:
+      topic_weight = None
+      
+    if token_count is "" or token_count is None:
+      token_count = 100
 
     # Load Milvus Vector DB collection
     vector_db_collection = Collection('cloudera_ml_docs')

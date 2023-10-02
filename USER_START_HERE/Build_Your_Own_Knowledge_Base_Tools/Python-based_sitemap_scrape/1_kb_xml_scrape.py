@@ -17,7 +17,7 @@
 # cloudera_kb_config.conf FILE AND APPROPRIATE DEPENDENCIES
 # ARE INSTALLED FROM PIP. 
 
-# THE OUTPUT OF THIS FILE WILL STORE HTMLS IN /data WITH THE NAMING
+# THE OUTPUT OF THIS PROCESS WILL STORE HTMLS IN /data WITH THE NAMING
 # CONVENTION 1_htmls.txt FOR PARSING BY THE NEXT UTILITY
 
 import requests
@@ -49,7 +49,7 @@ def extract_urls_and_scan(root, xml_namespace):
         try:
             url = elem.text
             if url.endswith('.html'):
-                with open("data/1_htmls.txt", "a") as file:
+                with open("found_htmls.txt", "a") as file:
                     file.write(elem.text + "\n")
                 continue  # Skip to the next iteration
             elif url.endswith('.xml'):
@@ -58,7 +58,7 @@ def extract_urls_and_scan(root, xml_namespace):
                 res = fetch_and_parse_xml(url)
                 extract_urls_and_scan(res, xml_namespace)
         except:
-            with open("data/1_errors.txt", "a") as file:
+            with open("htmls/found_errors.txt", "a") as file:
                 file.write(f"Error with XML at: {elem.text}\n")
     return xml_urls
 

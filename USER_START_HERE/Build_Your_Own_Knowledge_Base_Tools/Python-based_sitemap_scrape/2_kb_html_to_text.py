@@ -67,7 +67,6 @@ def extract_and_write_text(url, base_path, tld):
 
         except:
             print(f"Request attempt {attempt} failed with connection error.")
-    
             
             # Sleep for a while before retrying
             print(f"Retrying in {retry_delay_seconds} seconds...")
@@ -87,14 +86,9 @@ def extract_and_write_text(url, base_path, tld):
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(soup.get_text())
 
-        # # Recursive call for additional URLs within <main>
-        # for a_tag in main_content.find_all('a', href=True):
-        #     new_url = urljoin(url, a_tag['href'])
-        #     extract_and_write_text(new_url, base_path, tld)
-
 def main():
-    base_path = "./data/2_website_contents"
-    with open("data/1_htmls.txt", "r") as file:
+    base_path = "/home/cdsw/data"
+    with open("found_htmls.txt", "r") as file:
         for line in file:
             url = line.strip()
             if url:
