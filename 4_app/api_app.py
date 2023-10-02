@@ -12,13 +12,19 @@ from pymilvus import connections, Collection
 from typing import Any, Union, Optional
 import utils.vector_db_utils as vector_db
 import utils.model_embedding_utils as model_embedding
-import utils.llama2_model_utils as llama2_model
+from llama_cpp import Llama
 
 ## Initialize Llama2 Model on app startup
-llama2_model.llama2_model
+model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.ggmlv3.q5_1.bin"
+
+llama2_model = Llama(
+    model_path=model_path,
+    n_gpu_layers=64,
+    n_ctx=2000
+)
 
 # Test an inference
-print(llama2_model.llama2_model(prompt="Hello ", max_tokens=1))
+print(llama2_model(prompt="Hello ", max_tokens=1))
 
 app = FastAPI()
 
@@ -83,16 +89,20 @@ def load_context_chunk_from_data(id_path):
 # Pass through user input to LLM model with enhanced prompt and stop tokens
 def get_llama2_response_with_context(question, context, temperature, token_count):
     question = "Answer this question based on given context. If you do not know the answer, do not make something up. This is the question: " + question
-    question_and_context = question + "Here is the context: " + context
+    question_and_context = question + "Here is the context: " + context.replace('\n', ' ')
 
     try:
         params = {
-            "temperature": temperature,
-            "max_tokens": token_count
+            "temperature": float(temperature),
+            "max_tokens": int(token_count)
         }
-        response = llama2_model.llama2_model(prompt=question_and_context, **params)
+        response = llama2_model(prompt=question_and_context, **params)
+
         model_out = response['choices'][0]['text']
         return model_out
+    
+    except Exception as e:
+        return "Error in generating response."
     
     except Exception as e:
         return "Error in generating response."

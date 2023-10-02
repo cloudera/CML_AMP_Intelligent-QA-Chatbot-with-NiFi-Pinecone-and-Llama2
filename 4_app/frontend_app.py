@@ -7,16 +7,47 @@ from pydantic import BaseModel
 import tensorflow as tf
 import utils.vector_db_utils as vector_db
 import utils.model_embedding_utils as model_embedding
-import utils.llama2_model_utils as llama2_model
-import styling
+from llama_cpp import Llama
 
 ## Initialize Llama2 Model on app startup
-llama2_model.llama2_model
+model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.ggmlv3.q5_1.bin"
+
+llama2_model = Llama(
+    model_path=model_path,
+    n_gpu_layers=64,
+    n_ctx=2000
+)
+
 
 # Test an inference
-print(llama2_model.llama2_model(prompt="Hello ", max_tokens=1))
+print(llama2_model(prompt="Hello ", max_tokens=1))
 
-app_css = styling.custom_css
+app_css = f"""
+        .gradio-header {{
+            color: white;
+        }}
+        .gradio-description {{
+            color: white;
+        }}
+
+        #custom-logo {{
+            text-align: center;
+        }}
+        .gr-interface {{
+            background-color: rgba(255, 255, 255, 0.8);
+        }}
+        .gradio-header {{
+            background-color: rgba(0, 0, 0, 0.5);
+        }}
+        .gradio-input-box, .gradio-output-box {{
+            background-color: rgba(255, 255, 255, 0.8);
+        }}
+        h1 {{
+            color: white; 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: large; !important;
+        }}
+"""
 
 def main():
     # Configure gradio QA app 
@@ -106,19 +137,21 @@ def load_context_chunk_from_data(id_path):
   
 # Pass through user input to LLM model with enhanced prompt and stop tokens
 def get_llama2_response_with_context(question, context, temperature, token_count, topic_weight):
-    if topic_weight != None:
-        question = "Answer this question based on given context. If you do not know the answer, do not make something up. You should know that this question is about the topic " + topic_weight + " This is the question: " + question
+
+    if topic_weight is not None:
+        question = "Answer this question based on given context. If you do not know the answer, do not make something up. You should know that this question is about the topic " + str(topic_weight) + " This is the question: " + str(question)
     else:
-        question = "Answer this question based on given context. If you do not know the answer, do not make something up. This is the question: " + question
+        question = "Answer this question based on given context. If you do not know the answer, do not make something up. This is the question: " + str(question)
     
-    question_and_context = question + "Here is the context: " + context
+    question_and_context = question + "Here is the context: " + str(context)
 
     try:
         params = {
-            "temperature": temperature,
-            "max_tokens": token_count
+            "temperature": float(temperature),
+            "max_tokens": int(token_count)
         }
-        response = llama2_model.llama2_model(prompt=question_and_context, **params)
+        response = llama2_model(prompt=question_and_context, **params)
+
         model_out = response['choices'][0]['text']
         return model_out
     

@@ -1,15 +1,25 @@
 # CDF to CML with LLama2 models
 This AMP contains the files to host an Open Source Llama2-based model and an accompanying UI and API. This AMP enables organizations to deploy a custom chatbot, currated to data scraped from a website (or websites) sitemap(s) using CDF (NiFi).
 
-![](/assets/catalog-entry.jpg)
+![](/assets/catalog-entry.png)
 
-## Add to your CML AMP library
+ARCHITECTURE DIAGRAM HERE
 
-This can be added to CML via its Github link or the custom catalog entry: https://raw.githubusercontent.com/kevinbtalbert/llama2-api-open-source/main/catalog-entry.yaml
+## Building your custom knowledge base
+To build your own custom knowledge base, you will want to follow the instructions [here](USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/README.md) in the folder `USER_START_HERE`. There are guides for a Cloudera DataFlow and Pythonic implementation of how to do this. Then, you will want to rerun the `Populate Vector DB` Job to ensure your vector DB has the latest embeddings.
 
-![](/assets/add-catalog.png)
+## Two Flavors: UI (Front end) and API
+This project allows you to access the context-driven LLM using two flavors: a UI and an API. Both are listed as Applications in CML which you can spin up/down as needed. 
 
-## Forming a request to the API
+### UI (Front end)
+
+This is the default application choice for the AMP. You should be able to access the view through your applications nav. When it starts, you will be able to select the default model (`llama-2-13b-chat`), temperature (a good default is 1), number of tokens (a good default may be 100), topic weight (a domain for the corpus of knowledge to prioritize), and question for the model to process. Defaults will be selected if you choose not to answer these; however a question is required.
+
+![](/assets/interface.png)
+
+### REST API
+
+#### Forming a request to the API
 Requests can be formed intra-domain or cross-domain. For cross-domain requests, you'll need to ensure unauthenticated app access is allowed for the POST endpoint to be reachable. Be cognizant of the amount of tokens and temperature you feed into the payload parameters. Most requests for a couple sentences should use around 200 tokens, a paragraph could use upwards of 600-800. 
 
 ![](/assets/unauthenticated-access1.png)
@@ -24,54 +34,28 @@ Successful GET request should indicate the API is up and running:
 
 ![](/assets/GET-endpoint.png)
 
-### Forming the POST request can be done through Postman or natively in CML:
+Forming the POST request can be done through Postman or natively in CML:
 
-#### 1. Postman
+1. Postman
 
-Form the payload/url to match the below, and add the header `Content-Type | application/json`
+Form the payload/url and body to match the below, and add the header `Content-Type | application/json`
+
+```
+{
+    "inputs": "What is Cloudera Data Science Workbench?",
+    "parameters": {
+        "temperature": 1,
+        "max_tokens": 100
+    }
+}
+```
 
 ![](/assets/postman-setup.png)
 
+Note that in future development, `engine` may also be customized to include more than the Llama2 one which comes with the AMP deployment.
 
-#### 2. Pythonic (also available in the 3_app folder as an Jupyter notebook)
+2. Pythonic (Available in the 4_app folder as an Jupyter notebook)
 
-```python
-import requests
-import json
-import os
+### The Fine Print
 
-# URL to send the POST request to (set to yours)
-external_url = "https://subdomain.domain.ylcu-atmi.cloudera.site/"
-internal_url = "https://127.0.0.1:" + str(os.environ['CDSW_APP_PORT']) + "/"
-
-# Choose which URL to use
-url = internal_url
-
-# Headers for the POST request
-headers = {
-    "Content-Type": "application/json"
-}
-
-# JSON Body for the POST request
-payload = {
-    "inputs": "What is Cloudera Data Science Workbench?",
-    "parameters": {
-        "temperature": 0.0,
-        "max_tokens": 150
-    }
-}
-
-# Convert Python dictionary to JSON
-payload_json = json.dumps(payload)
-
-# Make the POST request
-response = requests.post(url, headers=headers, data=payload_json)
-
-# Check if the request was successful
-if response.status_code == 200:
-    print(f"Success! Received response: {response.json()}")
-else:
-    print(f"Failed to make request. Status code: {response.status_code}, Response: {response.text}")
-
-```
-
+DISCUSS HOW IT WORKS
