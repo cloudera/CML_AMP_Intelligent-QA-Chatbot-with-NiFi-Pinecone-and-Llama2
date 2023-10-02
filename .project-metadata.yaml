@@ -72,22 +72,19 @@ tasks:
     entity_label: vectordb_insert
     short_summary: Populate Vector DB with documents embeddings
   
-  - type: start_application
-    name: CML Llama2 Chatbot Interface
-    subdomain: cml-llama2-api
-    script: 4_app/frontend_app.py
-    short_summary: Start CML Llama2 frontend application
-    long_summary: Start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
-    cpu: 2
-    memory: 16
-    gpu: 1
-    environment_variables:
-      TASK_TYPE: START_APPLICATION
-
-
   - type: create_application
     name: CML Llama2 Chatbot API
     subdomain: cml-llama2-api
+    script: 4_app/api_app.py
+    short_summary: Start CML Llama2 API application
+    long_summary: Start CML Llama2 API application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
+    cpu: 2
+    memory: 16
+    gpu: 1
+
+  - type: start_application
+    name: CML Llama2 Chatbot Interface
+    subdomain: cml-llama2-ui
     script: 4_app/frontend_app.py
     short_summary: Start CML Llama2 frontend application
     long_summary: Start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
