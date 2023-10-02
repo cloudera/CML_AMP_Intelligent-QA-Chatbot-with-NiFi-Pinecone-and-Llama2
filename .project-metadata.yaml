@@ -1,11 +1,11 @@
-name: Llama2 Open Source API
+name: CDF to CML LLama2 Chatbot
 description: |
-  Host internal open source Llama2 LLM in the form of an API endpoint
+  Host internal open source Llama2 LLM in the form of UI and API endpoint with semantic search from custom knowledge base generated with CDF.
 
 author: Cloudera Inc.
 specification_version: 1.0
 prototype_version: 1.0
-date: "2023-09-30"
+date: "2023-10-02"
 
 runtimes:
   - editor: Workbench
@@ -75,7 +75,7 @@ tasks:
   - type: start_application
     name: CML Llama2 Chatbot Interface
     subdomain: cml-llama2-api
-    script: 3_app/frontend_app.py
+    script: 4_app/frontend_app.py
     short_summary: Start CML Llama2 frontend application
     long_summary: Start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
     cpu: 2
@@ -88,7 +88,7 @@ tasks:
   - type: create_application
     name: CML Llama2 Chatbot API
     subdomain: cml-llama2-api
-    script: 3_app/frontend_app.py
+    script: 4_app/frontend_app.py
     short_summary: Start CML Llama2 frontend application
     long_summary: Start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
     cpu: 2
