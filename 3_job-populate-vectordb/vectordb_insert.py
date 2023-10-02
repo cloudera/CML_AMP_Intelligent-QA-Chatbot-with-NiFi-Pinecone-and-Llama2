@@ -46,7 +46,7 @@ def main():
 
     # Create/Recreate the Milvus collection
     collection_name = 'cloudera_ml_docs'
-    collection = create_milvus_collection(collection_name, 384)
+    collection = create_milvus_collection(collection_name, 768)
 
     print("Milvus database is up and collection is created")
 
