@@ -99,7 +99,7 @@ There are two ways to launch this prototype on CML:
 2. **As ML Prototype** - In a CML workspace, click "New Project", add a Project Name, select "ML Prototype" as the Initial Setup option, copy in the [repo URL](https://github.com/kevinbtalbert/cdf-to-cml-llama2-chatbot), click "Create Project", click "Configure Project".
 
 
-### The Fine Print
+## The Fine Print
 
 All the components of the application (knowledge base, context retrieval, prompt enhancement LLM) are running within CDF and CML. This application does not call any external model APIs nor require any additional training of an LLM. The knowledge base is generated using the user passed sitemaps in NiFi (CDF) or Python, depending on the user preference.
 
