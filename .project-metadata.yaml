@@ -72,7 +72,7 @@ tasks:
     entity_label: vectordb_insert
     short_summary: Populate Vector DB with documents embeddings
   
-  - type: create_application
+  - type: start_application
     name: CML Llama2 Chatbot API
     subdomain: cml-llama2-api
     script: 4_app/api_app.py
