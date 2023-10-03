@@ -1,5 +1,5 @@
 # CDF to CML with LLama2 model
-This AMP contains the files to host an Open Source Llama2-based model and an accompanying UI and API. This AMP enables organizations to deploy a custom chatbot, currated to data scraped from a website (or websites) sitemap(s) using CDF (NiFi).
+Leverage the Llama2 model for creating a UI or API derived from your own knowledge base, scraped from your organization's website. This AMP contains the files to host an open source Llama2-based model and an accompanying UI or API. This AMP enables organizations to deploy a custom chatbot, currated to data scraped from a website (or websites) sitemap(s) using CDF (NiFi). 
 
 ![](/assets/catalog-entry.png)
 

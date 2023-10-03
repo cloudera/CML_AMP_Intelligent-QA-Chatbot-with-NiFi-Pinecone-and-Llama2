@@ -1,0 +1,26 @@
+name: CDF to CML with LLama2 model
+
+entries:
+  - title: CDF to CML with LLama2 model
+    label: llm-code-creation
+    short_description: |
+        Leverage Llama2 model for creating a UI or API derived from your own knowledge base, scraped from your organization's website. Uses CDF and CML Data Services.
+    long_description: |
+        IMPORTANT: Please read the following before proceeding. By configuring and launching this AMP, you will cause TheBloke/Llama-2-13B-chat-GGML, which is a third party large language model (LLM), to be downloaded and installed into your environment from the third party’s website. Additionally, you will be downloading sentence-transformers/all-mpnet-base-v2, which is the embedding model used in this project. Please see https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML and https://huggingface.co/sentence-transformers/all-mpnet-base-v2 for more information about the LLM and embedding model, including the applicable license terms.  If you do not wish to download and install TheBloke/Llama-2-13B-chat-GGML and sentence-transformers/all-mpnet-base-v2, do not deploy this repository.  By deploying this repository, you acknowledge the foregoing statement and agree that Cloudera is not responsible or liable in any way for TheBloke/Llama-2-13B-chat-GGML and sentence-transformers/all-mpnet-base-v2. Author: Cloudera Inc.
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        This AMP contains the files to host an Open Source Llama2-based model and an accompanying UI and API. 
+        This AMP enables organizations to deploy a custom chatbot, currated to data scraped from a website (or websites) sitemap(s) using CDF (NiFi).
+
+    image_path: >-
+      https://raw.githubusercontent.com/kevinbtalbert/cdf-to-cml-llama2-chatbot/main/images/catalog-entry.png
+    tags:
+      - Chatbot
+      - LLM
+      - Llama2
+      - Generative AI
+      - RAG
+      - NiFi
+      - CDF
+      - NLP
+    git_url: 'https://github.com/kevinbtalbert/cdf-to-cml-llama2-chatbot'
+    is_prototype: true

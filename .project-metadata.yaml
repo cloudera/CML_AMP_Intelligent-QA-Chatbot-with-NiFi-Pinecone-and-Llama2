@@ -30,6 +30,7 @@ tasks:
     kernel: python3
     cpu: 2
     memory: 4
+    gpu: 1
 
   - type: run_session
     name: Install Dependencies
