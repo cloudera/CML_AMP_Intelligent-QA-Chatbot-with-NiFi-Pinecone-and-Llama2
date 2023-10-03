@@ -81,6 +81,8 @@ tasks:
     cpu: 2
     memory: 16
     gpu: 1
+    environment_variables:
+      TASK_TYPE: START_APPLICATION
 
   - type: start_application
     name: CML Llama2 Chatbot Interface
