@@ -23,6 +23,15 @@ tasks:
     memory: 4
 
   - type: run_session
+    name: Validate GPU Capability
+    script: 0_verify_deps/check_gpu_capability.py
+    short_summary: Check for GPU capability. 
+    long_summary: Check GPUs are capable on this workspace and meet project requirements.
+    kernel: python3
+    cpu: 2
+    memory: 4
+
+  - type: run_session
     name: Install Dependencies
     script: 1_install_session_deps/download_requirements.py
     short_summary: Install Dependencies
