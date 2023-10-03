@@ -87,7 +87,7 @@ tasks:
     subdomain: cml-llama2-ui
     script: 4_app/frontend_app.py
     short_summary: Create and start CML Llama2 frontend application
-    long_summary: Create and start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
+    long_summary: Create and start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external access to the UI.
     cpu: 2
     memory: 16
     gpu: 1
