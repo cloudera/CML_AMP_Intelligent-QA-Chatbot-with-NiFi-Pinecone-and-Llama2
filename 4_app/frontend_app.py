@@ -1,5 +1,6 @@
 import os
 import gradio
+import pinecone
 from milvus import default_server
 from pymilvus import connections, Collection
 from typing import Any, Union, Optional
@@ -8,6 +9,7 @@ import tensorflow as tf
 import utils.vector_db_utils as vector_db
 import utils.model_embedding_utils as model_embedding
 from llama_cpp import Llama
+from sentence_transformers import SentenceTransformer
 
 ## Initialize Llama2 Model on app startup
 model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.ggmlv3.q5_1.bin"
@@ -17,6 +19,23 @@ llama2_model = Llama(
     n_gpu_layers=64,
     n_ctx=2000
 )
+
+if os.getenv('VECTOR_DB').upper() == "PINECONE":
+    PINECONE_API_KEY = os.getenv('PINECONE_API_KEY')
+    PINECONE_ENVIRONMENT = os.getenv('PINECONE_ENVIRONMENT')
+    PINECONE_INDEX = os.getenv('PINECONE_INDEX')
+
+    print("initialising Pinecone connection...")
+    pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENVIRONMENT)
+    print("Pinecone initialised")
+
+    print(f"Getting '{PINECONE_INDEX}' as object...")
+    index = pinecone.Index(PINECONE_INDEX)
+    print("Success")
+
+    # Get latest statistics from index
+    current_collection_stats = index.describe_index_stats()
+    print('Total number of embeddings in Pinecone index is {}.'.format(current_collection_stats.get('total_vector_count')))
 
 
 # Test an inference
@@ -82,18 +101,24 @@ def get_responses(engine, temperature, token_count, topic_weight, question):
       
     if token_count is "" or token_count is None:
       token_count = 100
-
-    # Load Milvus Vector DB collection
-    vector_db_collection = Collection('cloudera_ml_docs')
-    vector_db_collection.load()
+    
+    if os.getenv('VECTOR_DB').upper() == "MILVUS":
+        # Load Milvus Vector DB collection
+        vector_db_collection = Collection('cloudera_ml_docs')
+        vector_db_collection.load()
     
     # Phase 1: Get nearest knowledge base chunk for a user question from a vector db
     if topic_weight: 
         vdb_question = "Topic: " + topic_weight + " Question: " + question
     else:
         vdb_question = question
-    context_chunk, sources = get_nearest_chunk_from_vectordb(vector_db_collection, vdb_question)
-    vector_db_collection.release()
+        
+    if os.getenv('VECTOR_DB').upper() == "MILVUS":
+        context_chunk, sources = get_nearest_chunk_from_milvus_vectordb(vector_db_collection, vdb_question)
+        vector_db_collection.release()
+        
+    if os.getenv('VECTOR_DB').upper() == "PINECONE":
+        context_chunk, sources = get_nearest_chunk_from_pinecone_vectordb(index, vdb_question)
 
     if engine == "llama-2-13b-chat":
         # Phase 2a: Perform text generation with LLM model using found kb context chunk
@@ -102,7 +127,7 @@ def get_responses(engine, temperature, token_count, topic_weight, question):
     return response, sources
 
 # Get embeddings for a user question and query Milvus vector DB for nearest knowledge base chunk
-def get_nearest_chunk_from_vectordb(vector_db_collection, question):
+def get_nearest_chunk_from_milvus_vectordb(vector_db_collection, question):
     # Generate embedding for user question
     question_embedding =  model_embedding.get_embeddings(question)
     
@@ -127,6 +152,26 @@ def get_nearest_chunk_from_vectordb(vector_db_collection, question):
         response += str(load_context_chunk_from_data(f.id))
         sources += f.id
     
+    return response, sources
+
+# Get embeddings for a user question and query Pinecone vector DB for nearest knowledge base chunk
+def get_nearest_chunk_from_pinecone_vectordb(index, question):
+    # Generate embedding for user question with embedding model
+    retriever = SentenceTransformer('models/embedding-model')
+    xq = retriever.encode([question]).tolist()
+    xc = index.query(xq, top_k=5,
+                 include_metadata=True)
+    
+    matching_files = []
+    for match in xc['matches']:
+        # extract the 'file_path' within 'metadata'
+        file_path = match['metadata']['file_path']
+        matching_files.append(file_path)
+
+    # Return text of the nearest knowledge base chunk 
+    # Note that this ONLY uses the first matching document for semantic search. matching_files holds the top results so you can increase this if desired.
+    response = load_context_chunk_from_data(matching_files[0])
+    sources = matching_files[0]
     return response, sources
   
 # Return the Knowledge Base doc based on Knowledge Base ID (relative file path)

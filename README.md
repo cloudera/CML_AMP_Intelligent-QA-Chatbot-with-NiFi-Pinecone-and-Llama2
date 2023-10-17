@@ -77,6 +77,7 @@ This AMP requires pip packages and models from huggingface. Depending on your CM
 - pypi.org
 - pythonhosted.org
 - huggingface.co
+- pinecone.io (if using Pinecone)
 
 ## Technologies Used
 #### Open-Source Models and Utilities
@@ -87,6 +88,7 @@ This AMP requires pip packages and models from huggingface. Depending on your CM
 - [Hugging Face transformers library](https://pypi.org/project/transformers/)
 #### Vector Database
 - [Milvus](https://github.com/milvus-io/milvus)
+- [Pinecone](https://www.pinecone.io/)
 #### Chat Frontend
 - [Gradio](https://github.com/gradio-app/gradio)
 #### Chat API
@@ -103,4 +105,4 @@ There are two ways to launch this prototype on CML:
 
 All the components of the application (knowledge base, context retrieval, prompt enhancement LLM) are running within CDF and CML. This application does not call any external model APIs nor require any additional training of an LLM. The knowledge base is generated using the user passed sitemaps in NiFi (CDF) or Python, depending on the user preference.
 
-By configuring and launching this AMP, you will cause TheBloke/Llama-2-13B-chat-GGML, which is a third party large language model (LLM), to be downloaded and installed into your environment from the third party’s website. Additionally, you will be downloading sentence-transformers/all-mpnet-base-v2, which is the embedding model used in this project. Please see https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML and https://huggingface.co/sentence-transformers/all-mpnet-base-v2 for more information about the LLM and embedding model, including the applicable license terms.  If you do not wish to download and install TheBloke/Llama-2-13B-chat-GGML and sentence-transformers/all-mpnet-base-v2, do not deploy this repository.  By deploying this repository, you acknowledge the foregoing statement and agree that Cloudera is not responsible or liable in any way for TheBloke/Llama-2-13B-chat-GGML and sentence-transformers/all-mpnet-base-v2. Author: Cloudera Inc.
+By configuring and launching this AMP, you will cause TheBloke/Llama-2-13B-chat-GGML, which is a third party large language model (LLM), to be downloaded and installed into your environment from the third party’s website. Additionally, you will be downloading sentence-transformers/all-mpnet-base-v2, which is the embedding model used in this project. Please see https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML and https://huggingface.co/sentence-transformers/all-mpnet-base-v2 for more information about the LLM and embedding model, including the applicable license terms.  If you do not wish to download and install TheBloke/Llama-2-13B-chat-GGML and sentence-transformers/all-mpnet-base-v2, do not deploy this repository.  By deploying this repository, you acknowledge the foregoing statement and agree that Cloudera is not responsible or liable in any way for TheBloke/Llama-2-13B-chat-GGML and sentence-transformers/all-mpnet-base-v2. If you choose to use Pinecone instead of Milvus as your Vector DB, you acknowldge data will be transmitted to your tenant Pinecone account. You acknowledge outbound connections will be made to https://www.pinecone.io/ and Cloudera is not responsible for the data which leaves its platform. Author: Cloudera Inc.

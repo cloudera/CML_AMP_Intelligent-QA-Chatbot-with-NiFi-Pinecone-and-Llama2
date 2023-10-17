@@ -34,41 +34,42 @@ def insert_embedding(collection, id_path, text):
     collection.insert(data)
     
 def main():
-  # Reset the vector database files
-  print(subprocess.run(["rm -rf milvus-data"], shell=True))
+  if os.getenv('VECTOR_DB').upper() == "MILVUS":
+    # Reset the vector database files
+    print(subprocess.run(["rm -rf milvus-data"], shell=True))
 
-  default_server.set_base_dir('milvus-data')
-  default_server.start()
+    default_server.set_base_dir('milvus-data')
+    default_server.start()
 
-  try:
-    connections.connect(alias='default', host='localhost', port=default_server.listen_port)   
-    print(utility.get_server_version())
+    try:
+      connections.connect(alias='default', host='localhost', port=default_server.listen_port)   
+      print(utility.get_server_version())
 
-    # Create/Recreate the Milvus collection
-    collection_name = 'cloudera_ml_docs'
-    collection = create_milvus_collection(collection_name, 768)
+      # Create/Recreate the Milvus collection
+      collection_name = 'cloudera_ml_docs'
+      collection = create_milvus_collection(collection_name, 768)
 
-    print("Milvus database is up and collection is created")
+      print("Milvus database is up and collection is created")
 
-    # Read KB documents in ./data directory and insert embeddings into Vector DB for each doc
-    # The default embeddings generation model specified in this AMP only generates embeddings for the first 256 tokens of text.
-    doc_dir = './data'
-    for file in Path(doc_dir).glob(f'**/*.txt'):
-        with open(file, "r") as f: # Open file in read mode
-            print("Generating embeddings for: %s" % file.name)
-            text = f.read()
-            insert_embedding(collection, os.path.abspath(file), text)
+      # Read KB documents in ./data directory and insert embeddings into Vector DB for each doc
+      # The default embeddings generation model specified in this AMP only generates embeddings for the first 256 tokens of text.
+      doc_dir = './data'
+      for file in Path(doc_dir).glob(f'**/*.txt'):
+          with open(file, "r") as f: # Open file in read mode
+              print("Generating embeddings for: %s" % file.name)
+              text = f.read()
+              insert_embedding(collection, os.path.abspath(file), text)
 
-    collection.flush()
-    print('Total number of inserted embeddings is {}.'.format(collection.num_entities))
-    print('Finished loading Knowledge Base embeddings into Milvus')
+      collection.flush()
+      print('Total number of inserted embeddings is {}.'.format(collection.num_entities))
+      print('Finished loading Knowledge Base embeddings into Milvus')
 
-  except Exception as e:
-    default_server.stop()
-    raise (e)
+    except Exception as e:
+      default_server.stop()
+      raise (e)
+      
     
-  
-  default_server.stop()
+    default_server.stop()
 
 
 if __name__ == "__main__":
