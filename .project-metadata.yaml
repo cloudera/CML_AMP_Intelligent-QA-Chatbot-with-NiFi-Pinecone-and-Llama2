@@ -110,7 +110,7 @@ tasks:
     short_summary: Create CML Llama2 API application
     long_summary: Create CML Llama2 API application. To run this, you will shut down the interface version of the application and start this one. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
     cpu: 2
-    memory: 16
+    memory: 8
     gpu: 1
     environment_variables:
       TASK_TYPE: START_APPLICATION
@@ -122,7 +122,7 @@ tasks:
     short_summary: Create and start CML Llama2 frontend application
     long_summary: Create and start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external access to the UI.
     cpu: 2
-    memory: 16
+    memory: 8
     gpu: 1
     environment_variables:
       TASK_TYPE: START_APPLICATION
