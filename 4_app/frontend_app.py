@@ -1,15 +1,18 @@
 import os
 import gradio
 import pinecone
-from milvus import default_server
-from pymilvus import connections, Collection
+if os.getenv('VECTOR_DB').upper() == "MILVUS":
+    from milvus import default_server
+    from pymilvus import connections, Collection
 from typing import Any, Union, Optional
 from pydantic import BaseModel
 import tensorflow as tf
-import utils.vector_db_utils as vector_db
-import utils.model_embedding_utils as model_embedding
+if os.getenv('VECTOR_DB').upper() == "MILVUS":
+    import utils.vector_db_utils as vector_db
+    import utils.model_embedding_utils as model_embedding
 from llama_cpp import Llama
-from sentence_transformers import SentenceTransformer
+if os.getenv('VECTOR_DB').upper() == "PINECONE":
+    from sentence_transformers import SentenceTransformer
 
 ## Initialize Llama2 Model on app startup
 model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.ggmlv3.q5_1.bin"
