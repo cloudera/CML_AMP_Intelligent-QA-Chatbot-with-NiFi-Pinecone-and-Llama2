@@ -7,6 +7,7 @@ if os.getenv('VECTOR_DB').upper() == "MILVUS":
 from typing import Any, Union, Optional
 from pydantic import BaseModel
 import tensorflow as tf
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 if os.getenv('VECTOR_DB').upper() == "MILVUS":
     import utils.vector_db_utils as vector_db
     import utils.model_embedding_utils as model_embedding
@@ -15,7 +16,7 @@ if os.getenv('VECTOR_DB').upper() == "PINECONE":
     from sentence_transformers import SentenceTransformer
 
 ## Initialize Llama2 Model on app startup
-model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.ggmlv3.q5_1.bin"
+model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.Q5_0.gguf"
 
 llama2_model = Llama(
     model_path=model_path,
@@ -77,7 +78,7 @@ def main():
     demo = gradio.Interface(fn=get_responses,
                             title="Enterprise Custom Knowledge Base Chatbot with Llama2",
                             description="This AI-powered assistant uses Cloudera DataFlow (NiFi) to scrape a website's sitemap and create a knowledge base. The information it provides as a response is context driven by what is available at the scraped websites. It uses Meta's open-source Llama2 model and the sentence transformer model all-mpnet-base-v2 to evaluate context and form an accurate response from the semantic search. It is fine tuned for questions stemming from topics in its knowledge base, and as such may have limited knowledge outside of this domain. As is always the case with prompt engineering, the better your prompt, the more accurate and specific the response.",
-                            inputs=[gradio.Radio(['llama-2-13b-chat'], label="Select Model", value="llama-2-13b-chat"), gradio.Radio(['1', '2', '3'], label="Select Temperature (Randomness of Response)", value=["1", "2", "3"]), gradio.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value=["50", "100", "250", "500", "1000"]), gradio.Textbox(label="Topic Weight", placeholder="This field can be used to prioritize a topic weight."), gradio.Textbox(label="Question", placeholder="Enter your question here.")],
+                            inputs=[gradio.Radio(['llama-2-13b-chat'], label="Select Model", value="llama-2-13b-chat"), gradio.Radio(['0', '1', '2', '3'], label="Select Temperature (Randomness of Response)", value=["1", "2", "3"]), gradio.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value=["50", "100", "250", "500", "1000"]), gradio.Textbox(label="Topic Weight", placeholder="This field can be used to prioritize a topic weight."), gradio.Textbox(label="Question", placeholder="Enter your question here.")],
                             outputs=[gradio.Textbox(label="Llama2 Model Response"), gradio.Textbox(label="Context Data Source(s)")],
                             allow_flagging="never",
                             css=app_css)

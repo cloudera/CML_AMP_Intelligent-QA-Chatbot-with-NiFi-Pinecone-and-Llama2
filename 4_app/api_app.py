@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from pydantic import BaseModel
 import tensorflow as tf
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 import os
 import uvicorn
 import threading
@@ -20,7 +21,7 @@ if os.getenv('VECTOR_DB').upper() == "PINECONE":
     from sentence_transformers import SentenceTransformer
 
 ## Initialize Llama2 Model on app startup
-model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.ggmlv3.q5_1.bin"
+model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.Q5_0.gguf"
 
 llama2_model = Llama(
     model_path=model_path,
@@ -84,7 +85,7 @@ def get_responses(engine, temperature, token_count, question):
     return response
 
 # Get embeddings for a user question and query Milvus vector DB for nearest knowledge base chunk
-def get_nearest_chunk_from_vectordb(vector_db_collection, question):
+def get_nearest_chunk_from_milvus_vectordb(vector_db_collection, question):
     # Generate embedding for user question
     question_embedding =  model_embedding.get_embeddings(question)
     
