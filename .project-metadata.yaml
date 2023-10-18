@@ -52,8 +52,9 @@ tasks:
     script: 1_install_session_deps/download_requirements.py
     short_summary: Install Dependencies
     kernel: python3
-    cpu: 4
+    cpu: 2
     memory: 16
+    gpu: 1
     
   - type: create_job
     name: Download Models

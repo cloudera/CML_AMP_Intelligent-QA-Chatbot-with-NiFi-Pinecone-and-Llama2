@@ -4,7 +4,6 @@ rouge-score==0.1.2
 nltk==3.8.1
 fastapi==0.101.1
 typing-extensions==4.5.0
-llama-cpp-python==0.2.11
 uvicorn[standard]==0.23.2
 tensorflow==2.13.0
 click==8.1.7
