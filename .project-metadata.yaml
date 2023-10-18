@@ -49,15 +49,6 @@ tasks:
 
   - type: run_session
     name: Install Dependencies
-    script: 1_install_session_deps/install_llama_deps.py
-    short_summary: Install Llama Dependencies
-    kernel: python3
-    cpu: 2
-    memory: 8
-    gpu: 1
-
-  - type: run_session
-    name: Install Dependencies
     script: 1_install_session_deps/download_requirements.py
     short_summary: Install Package Dependencies
     kernel: python3
@@ -111,6 +102,15 @@ tasks:
   - type: run_job
     entity_label: pinecone_vectordb_insert
     short_summary: Populate Pinecone Vector DB with documents embeddings (This will only run if you set "PINECONE" as the Vector DB and provided valid parameters.)
+
+  - type: run_session
+    name: Install Dependencies
+    script: 1_install_session_deps/install_llama_deps.py
+    short_summary: Install Llama Dependencies
+    kernel: python3
+    cpu: 2
+    memory: 8
+    gpu: 1
   
   - type: start_application
     name: CML Llama2 Chatbot API
