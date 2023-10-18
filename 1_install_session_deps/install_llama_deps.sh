@@ -76,4 +76,6 @@ export CUDACXX=$CMAKE_CUDA_COMPILER
 export CMAKE_ARGS="-DLLAMA_CUBLAS=on -DCMAKE_CUDA_ARCHITECTURES=native"
 export FORCE_CMAKE=1
 
-python -m pip install llama-cpp-python --force-reinstall --no-cache-dir
+## Build tensorflow w/ GPU enablement
+python -m pip install tensorflow==2.13.0 --force-reinstall --no-cache-dir
+python -m pip install llama-cpp-python==0.2.11 --force-reinstall --no-cache-dir
