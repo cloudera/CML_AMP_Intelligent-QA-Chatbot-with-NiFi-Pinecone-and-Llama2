@@ -23,7 +23,7 @@ environment_variables:
     description: "Only Required for Pinecone Vector DB: The default is 'cml-default' and can be changed to identify variations for organizations with multiple indexes."
 
 runtimes:
-  - editor: Workbench
+  - editor: JupyterLab
     kernel: Python 3.9
     edition: Nvidia GPU
 
