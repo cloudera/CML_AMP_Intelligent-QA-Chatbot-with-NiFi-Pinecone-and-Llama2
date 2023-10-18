@@ -77,5 +77,3 @@ export CMAKE_ARGS="-DLLAMA_CUBLAS=on -DCMAKE_CUDA_ARCHITECTURES=native"
 export FORCE_CMAKE=1
 
 python -m pip install llama-cpp-python --force-reinstall --no-cache-dir
-
-pip install -r 1_install_session_deps/requirements.txt
