@@ -2,9 +2,11 @@ import torch
 import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoModel
 
+EMBEDDING_MODEL_REPO = "sentence-transformers/all-mpnet-base-v2"
+
 # Load the model stored in models/embedding-model
-tokenizer = AutoTokenizer.from_pretrained('models/embedding-model', local_files_only=True)
-model = AutoModel.from_pretrained('models/embedding-model', local_files_only=True)
+tokenizer = AutoTokenizer.from_pretrained(EMBEDDING_MODEL_REPO)
+model = AutoModel.from_pretrained(EMBEDDING_MODEL_REPO)
 
 # Mean Pooling - Take attention mask into account for correct averaging
 def mean_pooling(model_output, attention_mask):
@@ -20,7 +22,7 @@ def get_embeddings(sentence):
     # Tokenize sentences
     # Default model will truncate the document and only gets embeddings of the first 256 tokens.
     # Semantic search will only be effective on these first 256 tokens.
-    # Context loading in 4_app context will still include the ENTIRE document file
+    # Context loading in 3_app context will still include the ENTIRE document file
     encoded_input = tokenizer(sentences, padding='max_length', truncation=True, return_tensors='pt')
 
     # Compute token embeddings

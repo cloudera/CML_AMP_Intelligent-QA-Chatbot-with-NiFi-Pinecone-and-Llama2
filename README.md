@@ -56,7 +56,7 @@ Form the payload/url and body to match the below, and add the header `Content-Ty
 
 Note that in future development, `engine` may also be customized to include more than the Llama2 one which comes with the AMP deployment.
 
-2. Pythonic (Available in the 4_app folder as an Jupyter notebook)
+2. Pythonic (Available in the 3_app folder as an Jupyter notebook)
 
 ## Requirements
 #### CML Instance Types

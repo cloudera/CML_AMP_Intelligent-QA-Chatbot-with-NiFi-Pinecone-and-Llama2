@@ -20,11 +20,16 @@ from llama_cpp import Llama
 if os.getenv('VECTOR_DB').upper() == "PINECONE":
     from sentence_transformers import SentenceTransformer
 
-## Initialize Llama2 Model on app startup
-model_path = "/home/cdsw/models/gen-ai-model/llama-2-13b-chat.Q5_0.gguf"
+from huggingface_hub import hf_hub_download
 
+GEN_AI_MODEL_REPO = "TheBloke/Llama-2-13B-chat-GGUF"
+GEN_AI_MODEL_FILENAME = "llama-2-13b-chat.Q5_0.gguf"
+
+gen_ai_model_path = hf_hub_download(repo_id=GEN_AI_MODEL_REPO, filename=GEN_AI_MODEL_FILENAME)
+
+## Initialize Llama2 Model on app startup
 llama2_model = Llama(
-    model_path=model_path,
+    model_path=gen_ai_model_path,
     n_gpu_layers=64,
     n_ctx=2000
 )

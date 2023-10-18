@@ -6,6 +6,7 @@ fastapi==0.101.1
 typing-extensions==4.5.0
 uvicorn[standard]==0.23.2
 tensorflow==2.13.0
+huggingface-hub==0.18.0
 click==8.1.7
 pandas==2.0.3
 milvus==2.2.8
