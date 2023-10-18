@@ -53,7 +53,7 @@ tasks:
     short_summary: Install Dependencies
     kernel: python3
     cpu: 2
-    memory: 8
+    memory: 16
     gpu: 1
     
   - type: create_job
