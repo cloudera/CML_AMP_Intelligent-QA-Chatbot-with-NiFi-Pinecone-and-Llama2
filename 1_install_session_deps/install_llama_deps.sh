@@ -43,7 +43,7 @@ fi
 
 
 # Get raw nvcc output
-RAW_NVCC_OUTPUT=$(/usr/local/cuda/bin/nvcc --version)
+RAW_NVCC_OUTPUT=$(nvcc --version)
 echo "Raw NVCC Output: $RAW_NVCC_OUTPUT"
 
 # Filter the line that contains the release version
