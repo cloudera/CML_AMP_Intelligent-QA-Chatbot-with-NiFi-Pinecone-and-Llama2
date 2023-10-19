@@ -22,6 +22,7 @@ if os.getenv('VECTOR_DB').upper() == "PINECONE":
 
 from huggingface_hub import hf_hub_download
 
+EMBEDDING_MODEL_REPO = "sentence-transformers/all-mpnet-base-v2"
 GEN_AI_MODEL_REPO = "TheBloke/Llama-2-13B-chat-GGUF"
 GEN_AI_MODEL_FILENAME = "llama-2-13b-chat.Q5_0.gguf"
 
@@ -118,7 +119,7 @@ def get_nearest_chunk_from_milvus_vectordb(vector_db_collection, question):
 # Get embeddings for a user question and query Pinecone vector DB for nearest knowledge base chunk
 def get_nearest_chunk_from_pinecone_vectordb(index, question):
     # Generate embedding for user question with embedding model
-    retriever = SentenceTransformer('models/embedding-model')
+    retriever = SentenceTransformer(EMBEDDING_MODEL_REPO)
     xq = retriever.encode([question]).tolist()
     xc = index.query(xq, top_k=5,
                  include_metadata=True)
