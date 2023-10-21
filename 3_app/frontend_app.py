@@ -81,10 +81,20 @@ app_css = f"""
 def main():
     # Configure gradio QA app 
     print("Configuring gradio app")
-    demo = gradio.Interface(fn=get_responses,
+    if os.getenv('VECTOR_DB').upper() == "PINECONE":
+      demo = gradio.Interface(fn=get_responses,
                             title="Enterprise Custom Knowledge Base Chatbot with Llama2",
                             description="This AI-powered assistant uses Cloudera DataFlow (NiFi) to scrape a website's sitemap and create a knowledge base. The information it provides as a response is context driven by what is available at the scraped websites. It uses Meta's open-source Llama2 model and the sentence transformer model all-mpnet-base-v2 to evaluate context and form an accurate response from the semantic search. It is fine tuned for questions stemming from topics in its knowledge base, and as such may have limited knowledge outside of this domain. As is always the case with prompt engineering, the better your prompt, the more accurate and specific the response.",
-                            inputs=[gradio.Radio(['llama-2-13b-chat'], label="Select Model", value="llama-2-13b-chat"), gradio.Radio(['0', '1', '2', '3'], label="Select Temperature (Randomness of Response)", value=["1", "2", "3"]), gradio.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value=["50", "100", "250", "500", "1000"]), gradio.Textbox(label="Topic Weight", placeholder="This field can be used to prioritize a topic weight."), gradio.Textbox(label="Question", placeholder="Enter your question here.")],
+                            inputs=[gradio.Radio(['llama-2-13b-chat'], label="Select Model", value="llama-2-13b-chat"), gradio.Slider(minimum=0.01, maximum=1.0, step=0.01, value=0.5, label="Select Temperature (Randomness of Response)"), gradio.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value=["50", "100", "250", "500", "1000"]), gradio.Textbox(label="Topic Weight", placeholder="This field can be used to prioritize a topic weight."), gradio.Textbox(label="Question", placeholder="Enter your question here.")],
+                            outputs=[gradio.Textbox(label="Llama2 Model Response"), gradio.Textbox(label="Context Data Source(s)"), gradio.Textbox(label="Pinecone Match Score")],
+                            allow_flagging="never",
+                            css=app_css)
+    
+    else:
+      demo = gradio.Interface(fn=get_responses,
+                            title="Enterprise Custom Knowledge Base Chatbot with Llama2",
+                            description="This AI-powered assistant uses Cloudera DataFlow (NiFi) to scrape a website's sitemap and create a knowledge base. The information it provides as a response is context driven by what is available at the scraped websites. It uses Meta's open-source Llama2 model and the sentence transformer model all-mpnet-base-v2 to evaluate context and form an accurate response from the semantic search. It is fine tuned for questions stemming from topics in its knowledge base, and as such may have limited knowledge outside of this domain. As is always the case with prompt engineering, the better your prompt, the more accurate and specific the response.",
+                            inputs=[gradio.Radio(['llama-2-13b-chat'], label="Select Model", value="llama-2-13b-chat"), gradio.Slider(minimum=0.01, maximum=1.0, step=0.01, value=0.5, label="Select Temperature (Randomness of Response)"), gradio.Radio(["50", "100", "250", "500", "1000"], label="Select Number of Tokens (Length of Response)", value=["50", "100", "250", "500", "1000"]), gradio.Textbox(label="Topic Weight", placeholder="This field can be used to prioritize a topic weight."), gradio.Textbox(label="Question", placeholder="Enter your question here.")],
                             outputs=[gradio.Textbox(label="Llama2 Model Response"), gradio.Textbox(label="Context Data Source(s)")],
                             allow_flagging="never",
                             css=app_css)
@@ -128,13 +138,16 @@ def get_responses(engine, temperature, token_count, topic_weight, question):
         vector_db_collection.release()
         
     if os.getenv('VECTOR_DB').upper() == "PINECONE":
-        context_chunk, sources = get_nearest_chunk_from_pinecone_vectordb(index, vdb_question)
+        context_chunk, sources, score = get_nearest_chunk_from_pinecone_vectordb(index, vdb_question)
 
     if engine == "llama-2-13b-chat":
         # Phase 2a: Perform text generation with LLM model using found kb context chunk
         response = get_llama2_response_with_context(question, context_chunk, temperature, token_count, topic_weight)
-
-    return response, sources
+    
+    if os.getenv('VECTOR_DB').upper() == "PINECONE":
+        return response, sources, score
+    else:
+        return response, sources
 
 # Get embeddings for a user question and query Milvus vector DB for nearest knowledge base chunk
 def get_nearest_chunk_from_milvus_vectordb(vector_db_collection, question):
@@ -173,16 +186,21 @@ def get_nearest_chunk_from_pinecone_vectordb(index, question):
                  include_metadata=True)
     
     matching_files = []
+    scores = []
     for match in xc['matches']:
         # extract the 'file_path' within 'metadata'
         file_path = match['metadata']['file_path']
+        # extract the individual scores for each vector
+        score = match['score']
+        scores.append(score)
         matching_files.append(file_path)
 
     # Return text of the nearest knowledge base chunk 
     # Note that this ONLY uses the first matching document for semantic search. matching_files holds the top results so you can increase this if desired.
     response = load_context_chunk_from_data(matching_files[0])
     sources = matching_files[0]
-    return response, sources
+    score = scores[0]
+    return response, sources, score
   
 # Return the Knowledge Base doc based on Knowledge Base ID (relative file path)
 def load_context_chunk_from_data(id_path):
@@ -194,11 +212,11 @@ def load_context_chunk_from_data(id_path):
 def get_llama2_response_with_context(question, context, temperature, token_count, topic_weight):
 
     if topic_weight is not None:
-        question = "Answer this question based on given context. If you do not know the answer, do not make something up. You should know that this question is about the topic " + str(topic_weight) + " This is the question: " + str(question)
+        question = "Answer this question based on the given topic and context: Topic: " + str(topic_weight) + " Question: " + str(question)
     else:
-        question = "Answer this question based on given context. If you do not know the answer, do not make something up. This is the question: " + str(question)
+        question = "Answer this question based on the given context. Question: " + str(question)
     
-    question_and_context = question + "Here is the context: " + str(context)
+    question_and_context = question + " Here is the context: " + str(context)
 
     try:
         params = {
@@ -211,7 +229,8 @@ def get_llama2_response_with_context(question, context, temperature, token_count
         return model_out
     
     except Exception as e:
-        return "Error in generating response."
+        print(e)
+        return e
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ runtimes:
 tasks:
   - type: run_session
     name: Validate GPU Availibility
-    script: 0_verify_deps/check_gpu_resources.py
+    script: 0_session-verify-deps/check_gpu_resources.py
     short_summary: Check for GPU availibility. 
     long_summary: Check GPUs are enabled on this workspace and are currently schedulable.
     kernel: python3
@@ -39,7 +39,7 @@ tasks:
 
   - type: run_session
     name: Validate GPU Capability
-    script: 0_verify_deps/check_gpu_capability.py
+    script: 0_session-verify-deps/check_gpu_capability.py
     short_summary: Check for GPU capability. 
     long_summary: Check GPUs are capable on this workspace and meet project requirements.
     kernel: python3
@@ -49,7 +49,7 @@ tasks:
 
   - type: run_session
     name: Install Dependencies
-    script: 1_install_session_deps/download_requirements.py
+    script: 1_session-install-deps/download_requirements.py
     short_summary: Install Package Dependencies
     kernel: python3
     cpu: 2
@@ -89,24 +89,12 @@ tasks:
 
   - type: run_session
     name: Install Dependencies
-    script: 1_install_session_deps/install_llama_deps.py
+    script: 1_session-install-deps/install_llama_deps.py
     short_summary: Install Llama Dependencies
     kernel: python3
     cpu: 2
     memory: 8
     gpu: 1
-  
-  - type: start_application
-    name: CML Llama2 Chatbot API
-    subdomain: cml-llama2-api
-    script: 3_app/api_app.py
-    short_summary: Create CML Llama2 API application
-    long_summary: Create CML Llama2 API application. To run this, you will shut down the interface version of the application and start this one. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external facing API calls.
-    cpu: 2
-    memory: 8
-    gpu: 1
-    environment_variables:
-      TASK_TYPE: START_APPLICATION
 
   - type: start_application
     name: CML Llama2 Chatbot Interface
@@ -115,7 +103,7 @@ tasks:
     short_summary: Create and start CML Llama2 frontend application
     long_summary: Create and start CML Llama2 frontend application. Ensure available GPUs for best performance. Remember to enable unauthenticated app access for external access to the UI.
     cpu: 2
-    memory: 8
+    memory: 16
     gpu: 1
     environment_variables:
       TASK_TYPE: START_APPLICATION

@@ -143,8 +143,8 @@ def load_context_chunk_from_data(id_path):
   
 # Pass through user input to LLM model with enhanced prompt and stop tokens
 def get_llama2_response_with_context(question, context, temperature, token_count):
-    question = "Answer this question based on given context. If you do not know the answer, do not make something up. This is the question: " + question + " "
-    question_and_context = question + "Here is the context: " + context.replace('\n', ' ')
+    question = "Answer this question based on given context: " + question + " "
+    question_and_context = question + " Here is the context: " + str(context)
 
     try:
         params = {
@@ -157,7 +157,8 @@ def get_llama2_response_with_context(question, context, temperature, token_count
         return model_out
     
     except Exception as e:
-        return "Error in generating response."
+        print(e)
+        return e
 
 
 # This defines the data json format expected for the endpoint, change as needed
