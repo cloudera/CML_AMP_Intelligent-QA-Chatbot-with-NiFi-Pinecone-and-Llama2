@@ -4,14 +4,13 @@
 RAW_NVCC_OUTPUT=$(/usr/local/cuda/bin/nvcc --version)
 echo "NVCC Output: $RAW_NVCC_OUTPUT"
 
-# Extract the full CUDA version
+# Filter the line that contains the release version and extract the full CUDA version
+FILTERED_NVCC_OUTPUT=$(echo "$RAW_NVCC_OUTPUT" | grep "release")
 FULL_CUDA_VERSION=$(echo "$FILTERED_NVCC_OUTPUT" | awk '{print $6}' | cut -c2-)
 echo "Full CUDA Version: $FULL_CUDA_VERSION"
 
 # Construct CMAKE_CUDA_COMPILER path
 CMAKE_CUDA_COMPILER="/usr/local/cuda/bin/nvcc"
-
-# Export the path
 export CMAKE_CUDA_COMPILER
 
 # Print it out for verification
@@ -22,4 +21,4 @@ export CMAKE_ARGS="-DLLAMA_CUBLAS=on -DCMAKE_CUDA_ARCHITECTURES=native"
 export FORCE_CMAKE=1
 
 ## Build llama-cpp-python w/ CUDA enablement
-pip install llama-cpp-python==0.2.11 --force-reinstall --no-cache-dir
+pip install llama-cpp-python==0.2.11 --force-reinstall --no-cache-dir --user
