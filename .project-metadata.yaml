@@ -1,6 +1,6 @@
 name: CDF to CML LLama2 Chatbot
 description: |
-  Host internal open source Llama2 LLM in the form of UI and API endpoint with semantic search from custom knowledge base generated with CDF.
+  Ingest data with Cloudera DataFlow from a user-specified website sitemap to create embeddings in a Pinecone vector DB and deploy a context-aware LLM chatbot app with Cloudera Machine Learning.
 
 author: Cloudera Inc.
 specification_version: 1.0
