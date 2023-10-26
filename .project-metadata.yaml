@@ -1,4 +1,4 @@
-name: CDF to CML LLama2 Chatbot
+name: Intelligent QA Chatbot with NiFi, Pinecone, and Llama2
 description: |
   Ingest data with Cloudera DataFlow from a user-specified website sitemap to create embeddings in a Pinecone vector DB and deploy a context-aware LLM chatbot app with Cloudera Machine Learning.
 

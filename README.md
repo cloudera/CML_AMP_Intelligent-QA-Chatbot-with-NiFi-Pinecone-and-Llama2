@@ -1,4 +1,4 @@
-# LLM Chatbot Customized with Website Data
+# Intelligent QA Chatbot with NiFi, Pinecone, and Llama2
 In this Applied ML Prototype (AMP) we leverage Cloudera DataFlow (CDF) to scrape a website and load the vectors generated with Cloudera Machine Learning (CML). The prototype deploys an Application in CML using a Llama2 model from Hugging Face to answer questions augmented with knowledge extracted from the website. This prototype introduces Pinecone as a database for storing vectors for semantic search.
 
 ![](/assets/catalog-entry.png)
