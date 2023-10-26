@@ -136,4 +136,6 @@ By configuring and launching this AMP, you will cause **TheBloke/Llama-2-13B-cha
 
 If you do not wish to download and install **TheBloke/Llama-2-13B-chat-GGUF** and **sentence-transformers/all-mpnet-base-v2**, do not deploy this repository.  By deploying this repository, you acknowledge the foregoing statement and agree that Cloudera is not responsible or liable in any way for **TheBloke/Llama-2-13B-chat-GGUF** and **sentence-transformers/all-mpnet-base-v2**. 
 
-If you choose to use Pinecone instead of Milvus as your Vector DB, you acknowledge data will be transmitted to your tenant Pinecone account. You acknowledge outbound connections will be made to https://www.pinecone.io/ and Cloudera is not responsible for the data which leaves its platform. Author: Cloudera Inc.
+If you choose to use Pinecone instead of Milvus as your Vector DB, you acknowledge data will be transmitted to your tenant Pinecone account. You acknowledge outbound connections will be made to https://www.pinecone.io/ and Cloudera is not responsible for the data which leaves its platform. 
+
+Refer to the Project **NOTICE** and **LICENSE** files in the root directory. Author: Cloudera Inc.
