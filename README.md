@@ -121,7 +121,11 @@ This AMP requires pip packages and models from huggingface. Depending on your CM
 - [FastAPI](https://fastapi.tiangolo.com/)
 
 ## Deploying on CML
-Navigate to the Prototype Catalog on a CML workspace, select its tile, click "Launch as Project", and click "Configure Project". Then you can provide the necessary variables to select between Pinecone or Milvus as your vector DB and accept other project level settings.
+There are two ways to launch this prototype on CML:
+
+1. **From Prototype Catalog** - Navigate to the Prototype Catalog on a CML workspace, select the "Intelligent QA Chatbot with NiFi, Pinecone, and Llama2" tile, click "Launch as Project", click "Configure Project"
+
+2. **As ML Prototype** - In a CML workspace, click "New Project", add a Project Name, select "ML Prototype" as the Initial Setup option, copy in the [repo URL](https://github.com/cloudera/CML_AMP_Intelligent-QA-Chatbot-with-NiFi-Pinecone-and-Llama2), click "Create Project", click "Configure Project"
 
 
 ## The Fine Print

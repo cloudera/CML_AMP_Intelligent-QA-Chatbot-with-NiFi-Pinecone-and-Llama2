@@ -21,5 +21,5 @@ entries:
       - NiFi
       - CDF
       - NLP
-    git_url: 'https://github.com/kevinbtalbert/Intelligent-QA-Chatbot-with-NiFi-Pinecone-and-Llama2'
+    git_url: 'https://github.com/cloudera/CML_AMP_Intelligent-QA-Chatbot-with-NiFi-Pinecone-and-Llama2'
     is_prototype: true
