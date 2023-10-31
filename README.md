@@ -91,6 +91,9 @@ Note that in future development, the `engine` may also be customized to include 
 - A CUDA 5.0+ capable GPU instance type is recommended *(AMP will fail on Step 2 if this requirement is not met)*
   - The torch libraries in this AMP require a GPU with CUDA compute capability 5.0 or higher. (i.e. NVIDIA V100, A100, T4 GPUs)
 
+#### Recommended Runtime
+JupyterLab - Python 3.9 - Nvidia GPU - 2023.08
+
 #### Resource Requirements
 This AMP creates the following workloads with resource requirements:
 - CML Session: `2 CPU, 16GB MEM`
