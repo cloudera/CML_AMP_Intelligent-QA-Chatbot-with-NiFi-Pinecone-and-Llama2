@@ -137,11 +137,16 @@ tasks:
           max_new_tokens: 50
           repetition_penalty: 0.5
 
-    target_file_path: Launch_model.py
+    target_file_path: model/llm_model.py
     target_function_name: api_wrapper
 
-  - type: deploy_model
-    entity_label: llama-2-7b
+  - type: run_session
+    name: Start Llama2 CML Model (if enabled)
+    script: model/create_model.py
+    short_summary: Create/Start Llama2 CML Model (if enabled)
+    kernel: python3
+    cpu: 2
+    memory: 4
 
   - type: run_session
     name: Create/Start CML Llama2 Chatbot Interface

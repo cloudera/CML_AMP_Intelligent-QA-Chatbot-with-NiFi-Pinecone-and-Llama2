@@ -2,6 +2,7 @@ import os
 
 if os.getenv("VECTOR_DB") == "PINECONE":
     
+    import hashlib
     import subprocess
     import torch
     import torch.nn.functional as F
@@ -82,13 +83,14 @@ if os.getenv("VECTOR_DB") == "PINECONE":
         return (sentence_embeddings.tolist()[0])
 
         
-    # Create an embedding for given text/doc and insert it into Pinecone Vector DB
     def insert_embedding(pinecone_index, id_path, text):
         print("Upserting vectors...")
-        vectors = list(zip([text[:512]], [get_embeddings(text)], [{"file_path": id_path}]))
+        # Create a unique ID for each document by hashing the path
+        unique_id = hashlib.sha256(id_path.encode()).hexdigest()[:10]  # Shorten the hash to 10 characters
+        vectors = list(zip([unique_id], [get_embeddings(text)], [{"file_path": id_path}]))
         upsert_response = pinecone_index.upsert(
             vectors=vectors
-            )
+        )
         print("Success")
         
         
