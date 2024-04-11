@@ -25,7 +25,7 @@ import configparser
 from xml.etree import ElementTree as ET
 
 config = configparser.ConfigParser()
-config.read('cloudera_kb_config.conf')
+config.read('/home/cdsw/USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/cloudera_kb_config.conf')
 
 from bs4 import BeautifulSoup
 import re
@@ -45,6 +45,7 @@ def get_tld(url):
     return f"{parsed_url.scheme}://{parsed_url.netloc}"
 
 def create_directory_path_from_url(base_path, url):
+    url = url.replace("http:/", "").replace("https:/", "")
     url_parts = url.strip('/').split('/')
     directory_path = os.path.join(base_path, *url_parts[:-1])
     file_name = f"{url_parts[-1]}.txt"
@@ -88,7 +89,7 @@ def extract_and_write_text(url, base_path, tld):
 
 def main():
     base_path = "/home/cdsw/data"
-    with open("found_htmls.txt", "r") as file:
+    with open("/home/cdsw/USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/found_htmls.txt", "r") as file:
         for line in file:
             url = line.strip()
             if url:

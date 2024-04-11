@@ -25,7 +25,7 @@ import configparser
 from xml.etree import ElementTree as ET
 
 config = configparser.ConfigParser()
-config.read('cloudera_kb_config.conf')
+config.read('/home/cdsw/USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/cloudera_kb_config.conf')
 
 def fetch_and_parse_xml(url):
     try:
@@ -49,7 +49,7 @@ def extract_urls_and_scan(root, xml_namespace):
         try:
             url = elem.text
             if url.endswith('.html'):
-                with open("found_htmls.txt", "a") as file:
+                with open("/home/cdsw/USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/found_htmls.txt", "a") as file:
                     file.write(elem.text + "\n")
                 continue  # Skip to the next iteration
             elif url.endswith('.xml'):
@@ -58,7 +58,7 @@ def extract_urls_and_scan(root, xml_namespace):
                 res = fetch_and_parse_xml(url)
                 extract_urls_and_scan(res, xml_namespace)
         except:
-            with open("htmls/found_errors.txt", "a") as file:
+            with open("/home/cdsw/USER_START_HERE/Build_Your_Own_Knowledge_Base_Tools/Python-based_sitemap_scrape/found_errors.txt", "a") as file:
                 file.write(f"Error with XML at: {elem.text}\n")
     return xml_urls
 
