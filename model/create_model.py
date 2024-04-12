@@ -17,8 +17,5 @@ if os.getenv("USE_CML_MODELS") == "True" or os.getenv("USE_CML_MODELS") == True:
     BUILD_ID = llama_model_build.model_builds[0].id
 
     model_deployment_body = cmlapi.CreateModelDeploymentRequest(project_id=PROJECT_ID, model_id=MODEL_ID, build_id=BUILD_ID, cpu=4, memory=16, nvidia_gpus=1, replicas=1)
-
     deploy_model_request = client.create_model_deployment(model_deployment_body, PROJECT_ID, MODEL_ID, BUILD_ID)
-
     print(deploy_model_request)
-    

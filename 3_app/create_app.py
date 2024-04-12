@@ -3,6 +3,8 @@ import cmlapi
 import random
 import string
 import json
+import random
+import string
 
 client = cmlapi.default_client(url=os.getenv("CDSW_API_URL").replace("/api/v1", ""), cml_api_key=os.getenv("CDSW_APIV2_KEY"))
 available_runtimes = client.list_runtimes(search_filter=json.dumps({
@@ -22,13 +24,18 @@ APP_IMAGE_ML_RUNTIME = available_runtimes.runtimes[1].image_identifier
 os.environ['APP_IMAGE_ML_RUNTIME'] = APP_IMAGE_ML_RUNTIME
 project = client.get_project(project_id=os.getenv("CDSW_PROJECT_ID"))
 
+def get_random_string(length):
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
 
 if os.getenv("USE_CML_MODELS") == "True" or os.getenv("USE_CML_MODELS") == True:
     application_request = cmlapi.CreateApplicationRequest(
-         name = "CML LLM Gradio Interface",
+         name = "Llama2 Chatbot",
          description = "Hosted interface for the CML LLM Gradio UI",
          project_id = project.id,
-         subdomain = "cml-llm-interface",
+         subdomain = "cml-llm-interface-" + get_random_string(4),
          script = "3_app/llm_app.py",
          cpu = 2,
          memory = 8,
@@ -37,10 +44,10 @@ if os.getenv("USE_CML_MODELS") == "True" or os.getenv("USE_CML_MODELS") == True:
     
 else:
     application_request = cmlapi.CreateApplicationRequest(
-         name = "CML LLM Gradio Interface",
+         name = "Llama2 Chatbot",
          description = "Hosted interface for the CML LLM Gradio UI",
          project_id = project.id,
-         subdomain = "cml-llm-interface",
+         subdomain = "cml-llm-interface-" + get_random_string(4),
          script = "3_app/llm_app.py",
          cpu = 4,
          memory = 16,

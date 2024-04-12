@@ -51,13 +51,11 @@ if os.getenv("VECTOR_DB") == "PINECONE":
         # Return the Pinecone index object.
         return pinecone_index
         
-
     # Mean Pooling - Take attention mask into account for correct averaging
     def mean_pooling(model_output, attention_mask):
         token_embeddings = model_output[0] #First element of model_output contains all token embeddings
         input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
         return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
-
 
     # Create embeddings using chosen embedding-model
     def get_embeddings(sentence):
@@ -81,7 +79,6 @@ if os.getenv("VECTOR_DB") == "PINECONE":
         sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
 
         return (sentence_embeddings.tolist()[0])
-
         
     def insert_embedding(pinecone_index, id_path, text):
         print("Upserting vectors...")
@@ -92,7 +89,6 @@ if os.getenv("VECTOR_DB") == "PINECONE":
             vectors=vectors
         )
         print("Success")
-        
         
     def main():
         try:
@@ -123,8 +119,6 @@ if os.getenv("VECTOR_DB") == "PINECONE":
 
     if __name__ == "__main__":
         main()
-
-
 
 if os.getenv("VECTOR_DB") == "CHROMA":
 
@@ -190,4 +184,3 @@ if os.getenv("VECTOR_DB") == "CHROMA":
             text = f.read()
             upsert_document(collection=collection, document=text, file_path=os.path.abspath(file))
     print('Finished loading Knowledge Base embeddings into Chroma DB')
-

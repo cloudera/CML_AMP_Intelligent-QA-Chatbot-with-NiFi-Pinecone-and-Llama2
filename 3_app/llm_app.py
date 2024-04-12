@@ -240,11 +240,9 @@ def get_responses(message, history, model, temperature, token_count, vector_db):
                 time.sleep(0.02)
                 yield response[:i+1]
     
-
 def url_from_source(source):
     url = source.replace('/home/cdsw/data/https:/', 'https://').replace('/home/cdsw/data/', 'https://').replace('.txt', '.html')
     return f"[Reference 1]({url})"
-    
 
 # Get embeddings for a user question and query Pinecone vector DB for nearest knowledge base chunk
 def get_nearest_chunk_from_pinecone_vectordb(index, question):
@@ -278,7 +276,6 @@ def load_context_chunk_from_data(id_path):
     with open(id_path, "r") as f: # Open file in read mode
         return f.read()
 
-
 # Get embeddings for a user question and query Chroma vector DB for nearest knowledge base chunk
 def get_nearest_chunk_from_chroma_vectordb(collection, question):
     ## Query Chroma vector DB 
@@ -288,9 +285,7 @@ def get_nearest_chunk_from_chroma_vectordb(collection, question):
                     n_results=1
                     # where={"metadata_field": "is_equal_to_this"}, # optional filter
                     # where_document={"$contains":"search_string"}  # optional filter
-    )
-    #print(results)
-    
+    )    
     return response['documents'][0][0], response['ids'][0][0]
 
 
@@ -338,7 +333,6 @@ def get_llama2_response_with_context(question, context, temperature, token_count
     except Exception as e:
         print(e)
         return e
-
 
 if __name__ == "__main__":
     main()
