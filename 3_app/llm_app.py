@@ -1,7 +1,6 @@
 import os
 import gradio as gr
 import cmlapi
-import pinecone
 from typing import Any, Union, Optional
 from pydantic import BaseModel
 import tensorflow as tf
@@ -10,16 +9,17 @@ import requests
 import json
 import time
 from typing import Optional
-import chromadb
 from chromadb.utils import embedding_functions
 from huggingface_hub import hf_hub_download
 from model import *
 
 if os.getenv("VECTOR_DB") == "PINECONE":
+    import pinecone
     USE_PINECONE = True
 else:
     USE_PINECONE = False
 if os.getenv("VECTOR_DB") == "CHROMA":
+    import chromadb
     USE_CHROMA = True 
 else:
     USE_CHROMA = False
@@ -239,7 +239,7 @@ def get_responses(message, history, model, temperature, token_count, vector_db):
             for i in range(len(response)):
                 time.sleep(0.02)
                 yield response[:i+1]
-    
+
 def url_from_source(source):
     url = source.replace('/home/cdsw/data/https:/', 'https://').replace('/home/cdsw/data/', 'https://').replace('.txt', '.html')
     return f"[Reference 1]({url})"
