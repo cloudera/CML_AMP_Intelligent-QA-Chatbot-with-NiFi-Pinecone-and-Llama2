@@ -9,7 +9,6 @@ import requests
 import json
 import time
 from typing import Optional
-from chromadb.utils import embedding_functions
 from huggingface_hub import hf_hub_download
 from model import *
 
@@ -20,6 +19,7 @@ else:
     USE_PINECONE = False
 if os.getenv("VECTOR_DB") == "CHROMA":
     import chromadb
+    from chromadb.utils import embedding_functions
     USE_CHROMA = True 
 else:
     USE_CHROMA = False
