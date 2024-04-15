@@ -30,7 +30,7 @@ def get_random_string(length):
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str
 
-if os.getenv("USE_CML_MODELS") == "True" or os.getenv("USE_CML_MODELS") == True:
+if os.getenv("USE_CML_MODELS").lower() == "true" or os.getenv("USE_CML_MODELS") == True:
     application_request = cmlapi.CreateApplicationRequest(
          name = "Llama2 Chatbot",
          description = "Hosted interface for the CML LLM Gradio UI",
