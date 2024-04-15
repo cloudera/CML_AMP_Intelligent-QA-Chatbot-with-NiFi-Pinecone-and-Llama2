@@ -71,7 +71,7 @@ if USE_CHROMA:
     current_collection_stats = collection.count()
     print('Total number of embeddings in Chroma DB index is ' + str(current_collection_stats))
     
-if os.getenv("USE_CML_MODELS") == "True" or os.getenv("USE_CML_MODELS") == True:
+if os.getenv("USE_CML_MODELS").lower() == "true" or os.getenv("USE_CML_MODELS") == True:
     client = cmlapi.default_client(url=os.getenv("CDSW_API_URL").replace("/api/v1", ""), cml_api_key=os.getenv("CDSW_APIV2_KEY"))
     ## Here we assume that only one model has been deployed in the project, if this is not true this should be adjusted (this is reflected by the placeholder 0 in the array)
     model = client.list_models(project_id=os.getenv("CDSW_PROJECT_ID"))
@@ -304,7 +304,7 @@ def get_llama2_response_with_context(question, context, temperature, token_count
         question_and_context = f"{llama_sys} {llama_inst} \n[INST] {question} [/INST]"
         
     try:
-        if os.getenv("USE_CML_MODELS") == "True" or os.getenv("USE_CML_MODELS") == True:
+        if os.getenv("USE_CML_MODELS").lower() == "true" or os.getenv("USE_CML_MODELS") == True:
             # Build a request payload for CML hosted model
             data={ "request": {"prompt":question_and_context,"temperature":temperature,"max_new_tokens":token_count,"repetition_penalty":1.5} }
 
