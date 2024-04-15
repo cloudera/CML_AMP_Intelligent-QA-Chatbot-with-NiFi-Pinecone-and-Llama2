@@ -162,7 +162,7 @@ def main():
     # Configure gradio QA app 
     print("Configuring gradio app")
 
-    DESC = "This AI-powered assistant showcases the flexibility of Cloudera Machine Learning to work with 3rd party solutions for LLMs and Vector Databases, as well as internally hosted models and vector DBs. The prototype does not yet implement chat history and session context - every prompt is treated as a brand new one."
+    DESC = "This AI-powered assistant showcases the flexibility of Cloudera Machine Learning to work with 3rd party solutions for LLMs and Vector Databases, as well as internally hosted models and vector DBs. Note that first time usage of this app will require loading the LLM model and future calls to the LLM model should be much shorter than the first."
     if os.getenv("VECTOR_DB") == "CHROMA":
         additional_inputs=[gr.Radio(['Local Llama 7B'], label="Select Foundational Model", value="Local Llama 7B"), 
                         gr.Slider(minimum=0.01, maximum=1.0, step=0.01, value=0.5, label="Select Temperature (Randomness of Response)"),
