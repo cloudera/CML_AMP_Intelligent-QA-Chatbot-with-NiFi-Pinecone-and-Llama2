@@ -137,7 +137,7 @@ tasks:
           max_new_tokens: 50
           repetition_penalty: 0.5
 
-    target_file_path: model/llm_model.py
+    target_file_path: llm_model.py
     target_function_name: api_wrapper
 
   - type: run_session
