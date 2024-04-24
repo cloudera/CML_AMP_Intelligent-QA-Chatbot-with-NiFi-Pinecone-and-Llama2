@@ -8,10 +8,6 @@ prototype_version: 1.0
 date: "2024-03-25"
 
 environment_variables:
-  USE_CML_MODELS:
-    default: False
-    description: "Enter 'True' or 'False' to use CML's inbuilt models to host the LLM. If True, you should ensure Site Administration > Settings > Ephemeral Storage Limit (in GB) is set to 20GB."
-    required: true
   VECTOR_DB:
     default: "CHROMA"
     description: "Enter 'CHROMA' or 'PINECONE' for your preferred Vector DB. Only 'CHROMA' or 'PINECONE' are valid options. Chroma does not require any additional setup. Pinecone will require you to create an account and generate an API key."
