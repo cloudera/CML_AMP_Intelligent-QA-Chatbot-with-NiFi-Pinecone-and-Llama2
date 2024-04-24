@@ -49,7 +49,7 @@ else:
          project_id = project.id,
          subdomain = "cml-llm-interface-" + get_random_string(4),
          script = "3_app/llm_app.py",
-         cpu = 4,
+         cpu = 2,
          memory = 16,
          nvidia_gpu = 1,
          runtime_identifier = os.getenv('APP_IMAGE_ML_RUNTIME')
