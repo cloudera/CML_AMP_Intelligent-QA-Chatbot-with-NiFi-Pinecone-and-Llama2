@@ -8,7 +8,7 @@ client = cmlapi.default_client(url=os.getenv("CDSW_API_URL").replace("/api/v1", 
 
 project = client.get_project(project_id=os.getenv("CDSW_PROJECT_ID"))
 
-if os.getenv("USE_CML_MODELS").lower() == "true" or os.getenv("USE_CML_MODELS") == True:
+if os.getenv("USE_CML_MODELS") and os.getenv("USE_CML_MODELS").lower() == "true" or os.getenv("USE_CML_MODELS") == True:
     llama_model = client.list_models(project.id)
     llama_model_build = client.list_model_builds(project.id, llama_model.models[0].id)
 
