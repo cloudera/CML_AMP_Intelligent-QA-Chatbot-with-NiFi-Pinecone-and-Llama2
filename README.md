@@ -19,8 +19,6 @@ To build your own custom knowledge base, you will want to follow the instruction
 
 **Select Number of Tokens (Length of Response)** - Here several options have been provided. The number of tokens the user uses directly correlate with the length of the response the model returns.
 
-**Topic Weight** - The concept of a topic weight allows the user to further curate a model's response by ensuring it closely aligns to the known context.
-
 **Question** - Just as it sounds; this is where the user can provide a question to the model
 
 ### Outputs
