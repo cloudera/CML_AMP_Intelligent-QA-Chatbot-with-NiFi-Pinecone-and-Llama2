@@ -16,9 +16,7 @@ print(available_runtimes)
 
 ## Set available runtimes to the latest runtime in the environment (iterator is the number that begins with 0 and advances sequentially)
 ## The JOB_IMAGE_ML_RUNTIME variable stores the ML Runtime which will be used to launch the job
-print(available_runtimes.runtimes[1])
-print(available_runtimes.runtimes[1].image_identifier)
-APP_IMAGE_ML_RUNTIME = available_runtimes.runtimes[1].image_identifier
+APP_IMAGE_ML_RUNTIME = available_runtimes.runtimes[len(available_runtimes.runtimes)-1].image_identifier
 
 ## Store the ML Runtime for any future jobs in an environment variable so we don't have to do this step again
 os.environ['APP_IMAGE_ML_RUNTIME'] = APP_IMAGE_ML_RUNTIME
