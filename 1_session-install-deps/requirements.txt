@@ -15,6 +15,7 @@ torch==2.0.1
 accelerate==0.21.0
 huggingface-hub==0.18.0
 langchain
+aiofiles
 
 ## Build custom knowlege base requirements
 beautifulsoup4==4.12.2
