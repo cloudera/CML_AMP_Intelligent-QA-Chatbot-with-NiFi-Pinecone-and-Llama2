@@ -35,6 +35,6 @@ sentence-transformers==2.2.2
 
 ## Model requirements
 setuptools==58.1.0
-bitsandbytes==0.39.1
+bitsandbytes==0.43.3
 scipy==1.11.1
 git+https://github.com/huggingface/peft.git@0b62b4378b4ce9367932c73540349da9a41bdea8
