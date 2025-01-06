@@ -25,7 +25,7 @@ environment_variables:
 
 
 runtimes:
-  - editor: JupyterLab
+  - editor: PBJ Workbench
     kernel: Python 3.10
     edition: Nvidia GPU
 
