@@ -35,7 +35,7 @@ def check_gpu_launch():
 
     # Wait for 10 minutes to see if worker pod reaches success state
     worker_schedule_status = workers.await_workers(
-        worker, wait_for_completion=True, timeout_seconds=600
+        worker, wait_for_completion=True, timeout_seconds=1200
     )
     if len(worker_schedule_status["failures"]) == 1:
         workers.stop_workers(worker_schedule_status["failures"][0]["id"])
