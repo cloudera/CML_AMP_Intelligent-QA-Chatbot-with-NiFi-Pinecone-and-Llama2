@@ -23,7 +23,7 @@ beautifulsoup4==4.12.2
 bs4==0.0.1
 certifi==2023.7.22
 requests==2.31.0
-urllib3==1.25.4
+urllib3==2.2.1
 
 ## Pinecone/Vector DB Requirements
 pinecone-client==2.2.4
