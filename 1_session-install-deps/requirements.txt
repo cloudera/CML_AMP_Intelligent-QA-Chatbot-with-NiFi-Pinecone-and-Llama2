@@ -32,7 +32,6 @@ sentence-transformers==2.2.2
 ## Chroma Vector DB Requirements
 chromadb==0.4.15
 pysqlite3-binary==0.5.3
-sentence-transformers==2.2.2
 
 ## Model requirements
 setuptools==69.5.1
