@@ -53,7 +53,7 @@ This AMP ships with a LLama2 model built for deployment in the project. Using CM
   - The torch libraries in this AMP require a GPU with CUDA compute capability 5.0 or higher. (i.e. NVIDIA V100, A100, T4 GPUs)
 
 #### Recommended Runtime
-JupyterLab - Python 3.10 - Nvidia GPU - 2023.08
+JupyterLab - Python 3.12 - Nvidia GPU
 
 #### Resource Requirements
 This AMP creates the following workloads with resource requirements:

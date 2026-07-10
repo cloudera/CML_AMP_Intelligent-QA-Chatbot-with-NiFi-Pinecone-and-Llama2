@@ -8,7 +8,7 @@ import string
 
 client = cmlapi.default_client(url=os.getenv("CDSW_API_URL").replace("/api/v1", ""), cml_api_key=os.getenv("CDSW_APIV2_KEY"))
 available_runtimes = client.list_runtimes(search_filter=json.dumps({
-    "kernel": "Python 3.10",
+    "kernel": "Python 3.12",
     "edition": "Nvidia GPU",
     "editor": "JupyterLab"
 }))
